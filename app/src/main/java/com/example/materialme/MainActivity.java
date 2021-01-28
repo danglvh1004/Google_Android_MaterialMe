@@ -1,10 +1,13 @@
 package com.example.materialme;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.view.View;
 
 import java.util.ArrayList;
 
@@ -35,12 +38,17 @@ public class MainActivity extends AppCompatActivity {
 
         // Get the data.
         initializeData();
+
     }
 
     /**
      * Initialize the sports data from resources.
      */
     private void initializeData() {
+
+        TypedArray sportsImageResources =
+                getResources().obtainTypedArray(R.array.sports_images);
+
         // Get the resources from the XML file.
         String[] sportsList = getResources()
                 .getStringArray(R.array.sports_titles);
@@ -53,11 +61,14 @@ public class MainActivity extends AppCompatActivity {
         // Create the ArrayList of Sports objects with titles and
         // information about each sport.
         for (int i = 0; i < sportsList.length; i++) {
-            mSportsData.add(new Sport(sportsList[i], sportsInfo[i]));
+            mSportsData.add(new Sport(sportsList[i], sportsInfo[i],
+                    sportsImageResources.getResourceId(i, 0)));
         }
 
         // Notify the adapter of the change.
         mAdapter.notifyDataSetChanged();
     }
 
+    public void resetSports(View view) {
+    }
 }
